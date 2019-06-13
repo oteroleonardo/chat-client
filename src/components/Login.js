@@ -16,7 +16,7 @@ const Login = () => {
           padding: 20
         }}
       >
-        <form style={{ width: "50%" }}>
+        <form style={{ width: "50%" }} onSubmit={this.handleSubmit}>
           <h1>Login</h1>
 
           <FormControl margin="normal" fullWidth>
