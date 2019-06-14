@@ -1,5 +1,6 @@
 import {saveUserToken} from "../utils/helper";
-import React, {Component } from "react";
+import React, {useState } from "react";
+import useReactRouter from 'use-react-router';
 import axios from "axios";
 import {
   FormControl,
@@ -8,28 +9,17 @@ import {
   Button,
 } from "@material-ui/core";
 
-class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: '',
-      password: '',
-      emailValid: false,
-    };
-    //this.handleInputChange = this.handleInputChange.bind(this);
-  }
-  handleInputChange(event){
-    //event.preventDefault();
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
-  }
+function Login() {
+  const { history} = useReactRouter();
+  const [email, setEmail] = useState("");
+  const [ password, setPassword ]  = useState("");
+  //const [emailValid, setEmailValid] = useState("");
 
-  handleSubmit(event){
+  function handleSubmit(event){
     event.preventDefault();
     const postData = {
-      email: this.state.email,
-      password: this.state.password,
+      email,
+      password,
     };
 
   const axiosConfig = {
@@ -46,7 +36,7 @@ class Login extends Component {
         if(result && result.data && result.data.token) {
           console.log('login successful!');
           saveUserToken(result.data.token)
-          this.props.history.push('/chat');
+          history.push('/chat');
         } else {
 
         }
@@ -56,11 +46,11 @@ class Login extends Component {
   }
 
 
-  validateForm(){
-    this.setState({formValid: this.state.emailValid && this.state.passwordValid});
-  }   
+  // validateForm(){
+  //   this.setState({formValid: this.state.emailValid && this.state.passwordValid});
+  // }   
 
-  render() {
+
     return (
       <div
         style={{
@@ -70,17 +60,23 @@ class Login extends Component {
           padding: 20
         }}
       >
-        <form style={{ width: "50%" }} onSubmit={(event) => this.handleSubmit(event)}>
+        <form style={{ width: "50%" }} onSubmit={(event) => handleSubmit(event)}>
           <h1>Login</h1>
 
           <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="email">Email</InputLabel>
-            <Input id="email" name="email" type="email" value={this.state.email} onChange={(event) => this.handleInputChange(event)}/>
+            <Input id="email" name="email" type="email" 
+              value={email} 
+              onChange={e => setEmail(e.target.value)} 
+            />
           </FormControl>
 
           <FormControl margin="normal" fullWidth>
             <InputLabel htmlFor="password">Password</InputLabel>
-            <Input id="password" name="password" type="password"  value={this.state.password} onChange={(event) => this.handleInputChange(event)}/>
+            <Input id="password" name="password" type="password"  
+              value={password} 
+              onChange={e => setPassword(e.target.value)} 
+            />
           </FormControl>
 
           <Button type="submit" variant="contained" color="primary" size="medium">
@@ -89,7 +85,6 @@ class Login extends Component {
         </form>
       </div>
     );
-  }
 };
 
 export default Login
