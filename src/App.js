@@ -1,7 +1,8 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import Header from "./components/Header"
 import Login from "./components/Login"
+import Chat2 from "./components/Chat2"
 function App() {
   return (
     <Router>
@@ -9,7 +10,7 @@ function App() {
         <Header/>
         <Route exact path="/" component={Login} />
         <Route path="/about" component={About} />
-        <Route path="/chat" component={Chat} />
+        <Route path="/chat" component={Chat2} />
       </div>
     </Router>
   );
@@ -21,30 +22,6 @@ function About() {
 
 function Topic({ match }) {
   return <h3>Requested Param: {match.params.id}</h3>;
-}
-
-function Chat({ match }) {
-  return (
-    <div>
-      <h2>Chat</h2>
-
-      <ul>
-        <li>
-          <Link to={`${match.url}/components`}>Components</Link>
-        </li>
-        <li>
-          <Link to={`${match.url}/props-v-state`}>Props v. State</Link>
-        </li>
-      </ul>
-
-      <Route path={`${match.path}/:id`} component={Topic} />
-      <Route
-        exact
-        path={match.path}
-        render={() => <h3>Please select a topic.</h3>}
-      />
-    </div>
-  );
 }
 
 export default App;
