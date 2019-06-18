@@ -41,14 +41,13 @@ export default (props) => {
   const ctx= useContext(ChatContext);
   const [message, setMessage] = useState();
 
-  console.log('1 ctx: ', ctx);
-
   const sendMessage = (e, ctx)=> {
-    console.log('2 ctx: ', ctx);
-    console.log('message to send:',  message);
+    console.log('message to send: ',  message);
+    console.log('ctx.send: ',  ctx.send);
+    ctx.setChatCtx({...ctx.chatCtx, send: { checked:ctx.chatCtx.checked, message}})
     //setMessage()      
   };
-  console.log('3 ctx: ', ctx);
+
   return (
     <ChatContext.Consumer>
       {chatCtx => (

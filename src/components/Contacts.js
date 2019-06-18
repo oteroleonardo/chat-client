@@ -46,8 +46,6 @@ const useStyles = makeStyles(theme => ({
 export default (props) => {
   const classes = useStyles();
 
-//  const [checked, setChecked] = React.useState([]);
-
   const onNoImage = event => {
     event.target.src = `${process.env.PUBLIC_URL}/avatar/avatarNoImage.jpeg`;
   };
