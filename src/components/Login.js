@@ -1,7 +1,10 @@
 import {saveUserToken} from "../utils/helper";
-import React, {useState } from "react";
+import React, {useState, useContext } from "react";
 import useReactRouter from 'use-react-router';
 import axios from "axios";
+
+import ChatContext from '../context/ChatContext';
+
 import {
   FormControl,
   InputLabel,
@@ -10,10 +13,10 @@ import {
 } from "@material-ui/core";
 
 function Login() {
+  const ctx = useContext(ChatContext);
   const { history} = useReactRouter();
   const [email, setEmail] = useState("");
   const [ password, setPassword ]  = useState("");
-  //const [emailValid, setEmailValid] = useState("");
 
   function handleSubmit(event){
     event.preventDefault();
@@ -36,6 +39,7 @@ function Login() {
         if(result && result.data && result.data.token) {
           console.log('login successful!');
           saveUserToken(result.data.token)
+          ctx.setChatCtx({...ctx.chatCtx, contacts: result.data.users})
           history.push('/chat');
         } else {
 

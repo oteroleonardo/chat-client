@@ -41,16 +41,17 @@ export default (props) => {
   const ctx= useContext(ChatContext);
   const [message, setMessage] = useState();
 
-  const sendMessage = (e, ctx)=> {
+  const sendMessage = (message)=> {
     console.log('message to send: ',  message);
-    console.log('ctx.send: ',  ctx.send);
-    ctx.setChatCtx({...ctx.chatCtx, send: { checked:ctx.chatCtx.checked, message}})
+//    setMessage(message);
+    ctx.setChatCtx({...ctx.chatCtx, send: message});
+    ctx.chatCtx.sendMessage(message, ctx.chatCtx.checked);
     //setMessage()      
   };
 
   return (
     <ChatContext.Consumer>
-      {chatCtx => (
+      {ctx => (
         <Grid item xs={12} sm={12}>
           <Paper className={classes.chat} style={{ height: '100px' }}>
             <TextField fullWidth={true} className={classes.sendBox}
@@ -61,7 +62,7 @@ export default (props) => {
               value={message}
               onChange={e => setMessage(e.target.value)} 
             />
-            <Button variant="contained" color="primary" className={classes.button} onClick={event => sendMessage(event, chatCtx)}>
+            <Button variant="contained" color="primary" className={classes.button} onClick={event => sendMessage(message)}>
               Send
         <SendIcon className={classes.rightIcon}>Send</SendIcon>
               {/* <Icon className={classes.rightIcon}>send</Icon> */}

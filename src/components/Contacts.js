@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -45,12 +45,12 @@ const useStyles = makeStyles(theme => ({
 
 export default (props) => {
   const classes = useStyles();
-
+  const ctx = useContext(ChatContext);
   const onNoImage = event => {
     event.target.src = `${process.env.PUBLIC_URL}/avatar/avatarNoImage.jpeg`;
   };
 
-  const handleToggle = (selectedContact, ctx) => () => {
+  const handleToggle = (selectedContact) => () => {
     const alreadyCheckedContact = ctx.chatCtx.checked.find(el => el.id ===selectedContact.id);
     let newChecked = [...ctx.chatCtx.checked];
     if (!alreadyCheckedContact) {
@@ -89,7 +89,7 @@ export default (props) => {
                   const labelId = `checkbox-list-label-${contact.id}`;
                   return (
                     <React.Fragment key={contact.id}>
-                      <ListItem alignItems={"center"}>
+                      <ListItem  key={contact.id} alignItems={"center"}>
                         <ListItemAvatar>
                           <Avatar
                             alt={contact.username}
