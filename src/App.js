@@ -4,7 +4,7 @@ import Header from "./components/Header"
 import Login from "./components/Login"
 import Chat from "./components/Chat"
 import ChatContext from './context/ChatContext';
-
+import Send from './services/Send';
 function App() {
   const [chatCtx, setChatCtx] = useState({
     contacts: [
