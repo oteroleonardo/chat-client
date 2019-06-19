@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
@@ -16,6 +16,7 @@ import CheckIcon from '@material-ui/icons/CheckCircle'
 import 'typeface-roboto';
 
 import ChatContext from '../context/ChatContext';
+import Message from "../services/Message";
 
 const useStyles = makeStyles(theme => ({
   messages: {
@@ -52,15 +53,21 @@ const useStyles = makeStyles(theme => ({
   },
 
 }));
-const onNoImage = event => {
-  event.target.src = `${process.env.PUBLIC_URL}/avatar/avatarNoImage.jpeg`;
-};
 
-const handleClick = value => () => {
-};
 export default (props) => {
   const classes = useStyles();
-  //const ctx = useContext(ChatContext);
+  const ctx = useContext(ChatContext);
+
+  const handleClick = ({id}) => async () => {
+    const { token } = ctx.chatCtx;
+    const resultUpdate = await Message.update({id, readed: true, token});
+    console.log('Result from calling message update: ', JSON.stringify(resultUpdate, null,2));
+    
+  };
+
+  const onNoImage = event => {
+    event.target.src = `${process.env.PUBLIC_URL}/avatar/avatarNoImage.jpeg`;
+  };
   return (
     <ChatContext.Consumer>
       {(ctx) => (
@@ -77,7 +84,7 @@ export default (props) => {
                   <React.Fragment key={index}>
                     <ListItem alignItems={"center"}>
                       <ListItemAvatar>
-                        <Avatar alt="Remy Sharp" 
+                        <Avatar alt={message.sender} 
                           src={`${process.env.PUBLIC_URL}/avatar/avatar${message.userId}.jpeg`} 
                           onError={event => onNoImage(event)} />
                       </ListItemAvatar>
@@ -94,7 +101,9 @@ export default (props) => {
                         }
                       />
                       <ListItemSecondaryAction>
-                        <Button variant="contained" aligh='right' color="primary" className={classes.button}>
+                        <Button variant="contained" aligh='right' color="primary" className={classes.button}
+                          onClick={handleClick(message, ctx)}
+                        >
                           Mark as readed
                           <CheckIcon className={classes.rightIcon}>Readed</CheckIcon>
                         </Button>

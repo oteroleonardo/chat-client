@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
-import ChatContext from '../context/ChatContext';
 import Messages from './Messages';
 import Contacts from './Contacts';
 import Send from './Send';

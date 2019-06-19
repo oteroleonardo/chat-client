@@ -51,6 +51,7 @@ export default (props) => {
   };
 
   const handleToggle = (selectedContact) => () => {
+    //TODO CHECK THIS AS IT"S NOT DETECTING ALREADY PRESENT CONTACTS
     const alreadyCheckedContact = ctx.chatCtx.checked.find(el => el.id ===selectedContact.id);
     let newChecked = [...ctx.chatCtx.checked];
     if (!alreadyCheckedContact) {

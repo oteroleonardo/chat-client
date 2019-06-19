@@ -45,8 +45,8 @@ export default (props) => {
     console.log('message to send: ',  message);
 //    setMessage(message);
     ctx.setChatCtx({...ctx.chatCtx, send: message});
-    ctx.chatCtx.sendMessage(message, ctx.chatCtx.checked);
-    //setMessage()      
+    ctx.chatCtx.sendMessage(message, ctx.chatCtx.checked, ctx.chatCtx.token, ()=>setMessage(''));
+  
   };
 
   return (
